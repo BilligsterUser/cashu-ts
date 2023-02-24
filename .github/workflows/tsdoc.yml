@@ -4,7 +4,8 @@ name: tsdoc-markdown
 
 on:
   push:
-
+permissions:
+  contents: write
 jobs:
   docs:
     runs-on: ubuntu-latest
