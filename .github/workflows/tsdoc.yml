@@ -1,0 +1,17 @@
+# A GitHub Actions workflow that generates the documentation for pull requests
+
+name: tsdoc-markdown
+
+on:
+  push:
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: TypeStrong/typedoc-action@v1
+      with:
+        args: --entrypoints src/index.ts
+        github-token: ${{ secrets.GITHUB_TOKEN }}
