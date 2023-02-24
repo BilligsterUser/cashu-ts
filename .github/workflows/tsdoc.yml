@@ -11,7 +11,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: TypeStrong/typedoc-action@v1
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
       with:
-        args: --entrypoints src/index.ts
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npx typedoc $(find  'src' -type f -name '*.ts' -not -name '*.test.ts' -printf "%p ") --out docs
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@4.1.4
+      with:
+        branch: gh-pages
+        folder: docs
